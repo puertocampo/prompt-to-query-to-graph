@@ -4,11 +4,11 @@ services:
     image: postgres:14
     container_name: sample_db
     environment:
-      POSTGRES_USER: myuser
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: mypass
-      POSTGRES_DB: mydb
+      POSTGRES_DB: postgres
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       # コンテナ起動時に initdb/ 以下の SQL を自動実行
       - ./initdb:/docker-entrypoint-initdb.d
