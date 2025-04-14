@@ -1,120 +1,120 @@
 [
     {
         "table": "departments",
-        "description": "学部名",
+        "description": "学部情報を格納するテーブル",
         "columns": [
             {
-                "name": "id",
-                "type": "integer",
+                "column_name": "id",
+                "data_type": "integer",
                 "description": "学部ID (主キー)"
             },
             {
-                "name": "name",
-                "type": "character varying",
+                "column_name": "name",
+                "data_type": "character varying",
                 "description": "学部名"
             }
         ]
     },
     {
         "table": "students",
-        "description": "学部ID (departments.id への外部キー)",
+        "description": "学生情報を格納するテーブル",
         "columns": [
             {
-                "name": "id",
-                "type": "integer",
+                "column_name": "id",
+                "data_type": "integer",
                 "description": "学生ID (主キー)"
             },
             {
-                "name": "year",
-                "type": "integer",
+                "column_name": "year",
+                "data_type": "integer",
                 "description": "学年 (1～4)"
             },
             {
-                "name": "department_id",
-                "type": "integer",
+                "column_name": "department_id",
+                "data_type": "integer",
                 "description": "学部ID (departments.id への外部キー)"
             },
             {
-                "name": "name",
-                "type": "character varying",
+                "column_name": "name",
+                "data_type": "character varying",
                 "description": "学生名"
             }
         ]
     },
     {
         "table": "professors",
-        "description": "学部ID (departments.id への外部キー)",
+        "description": "教員情報を格納するテーブル",
         "columns": [
             {
-                "name": "id",
-                "type": "integer",
+                "column_name": "id",
+                "data_type": "integer",
                 "description": "教員ID (主キー)"
             },
             {
-                "name": "department_id",
-                "type": "integer",
+                "column_name": "department_id",
+                "data_type": "integer",
                 "description": "学部ID (departments.id への外部キー)"
             },
             {
-                "name": "name",
-                "type": "character varying",
+                "column_name": "name",
+                "data_type": "character varying",
                 "description": "教員名"
             }
         ]
     },
     {
         "table": "courses",
-        "description": "単位数",
+        "description": "講義情報を格納するテーブル",
         "columns": [
             {
-                "name": "id",
-                "type": "integer",
+                "column_name": "id",
+                "data_type": "integer",
                 "description": "講義ID (主キー)"
             },
             {
-                "name": "professor_id",
-                "type": "integer",
+                "column_name": "professor_id",
+                "data_type": "integer",
                 "description": "担当教員ID (professors.id への外部キー)"
             },
             {
-                "name": "credits",
-                "type": "integer",
+                "column_name": "credits",
+                "data_type": "integer",
                 "description": "単位数"
             },
             {
-                "name": "name",
-                "type": "character varying",
+                "column_name": "name",
+                "data_type": "character varying",
                 "description": "講義名"
             }
         ]
     },
     {
         "table": "enrollments",
-        "description": "成績 (A, B, C, D, Fなど)",
+        "description": "履修情報・成績を格納するテーブル",
         "columns": [
             {
-                "name": "id",
-                "type": "integer",
+                "column_name": "id",
+                "data_type": "integer",
                 "description": "履修ID (主キー)"
             },
             {
-                "name": "student_id",
-                "type": "integer",
+                "column_name": "student_id",
+                "data_type": "integer",
                 "description": "学生ID (students.id への外部キー)"
             },
             {
-                "name": "course_id",
-                "type": "integer",
+                "column_name": "course_id",
+                "data_type": "integer",
                 "description": "講義ID (courses.id への外部キー)"
             },
             {
-                "name": "grade",
-                "type": "character varying",
+                "column_name": "grade",
+                "data_type": "character varying",
                 "description": "成績 (A, B, C, D, Fなど)"
             },
             {
-                "name": "term",
-                "type": "character varying",
+                "column_name": "term",
+                "data_type": "character varying",
                 "description": "学期 (Spring, Fall など)"
             }
         ]

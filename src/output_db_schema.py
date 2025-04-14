@@ -21,9 +21,9 @@ QUERY_TABLES = """
     FROM pg_catalog.pg_class c
     LEFT JOIN pg_catalog.pg_description d ON d.objoid = c.oid
     WHERE c.relkind = 'r'
-    AND c.relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = 'public');
+    AND c.relnamespace = (SELECT oid FROM pg_catalog.pg_namespace WHERE nspname = 'public')
+    AND d.objsubid = 0;
 """
-#    AND c.relname IN ('departments', 'students', 'professors', 'courses', 'enrollments');
 
 QUERY_COLUMNS = """
     SELECT 
@@ -44,7 +44,6 @@ QUERY_COLUMNS = """
         AND d.objsubid = c.ordinal_position
     WHERE c.table_schema = 'public';
 """
-# AND c.table_name IN ('departments', 'students', 'professors', 'courses', 'enrollments');
 
 def fetch_catalog_data():
     """PostgreSQLのスキーマ情報を取得し、カタログデータを生成"""
@@ -69,8 +68,8 @@ def fetch_catalog_data():
         for table_name, column_name, data_type, column_comment in cur.fetchall():
             if table_name in tables:
                 tables[table_name]["columns"].append({
-                    "name": column_name,
-                    "type": data_type,
+                    "column_name": column_name,
+                    "data_type": data_type,
                     "description": column_comment
                 })
 
