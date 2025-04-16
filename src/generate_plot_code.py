@@ -40,7 +40,7 @@ def generate_plot_code(data: list, plot_description: str) -> str:
 - グラフは見やすく、理解しやすいものにすること
 - 必要に応じて適切な色やスタイルを設定すること
 - X軸・Y軸のラベルとグラフタイトルは英語で記述すること
-- 最終的にグラフを画像として出力すること
+- 最終的にグラフを画像のbase64エンコードされたデータとして出力し、ローカルへの保存はしないこと
 """
     )
 
@@ -48,5 +48,6 @@ def generate_plot_code(data: list, plot_description: str) -> str:
     chain = prompt | model
 
     result = chain.invoke({'data': str(data), 'description': plot_description})
+    print('generated plot code: {}'.format(result.code))
     return result.code
 

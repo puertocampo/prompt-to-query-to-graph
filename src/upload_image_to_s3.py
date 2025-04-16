@@ -49,6 +49,7 @@ def upload_image_to_s3(base64_image: str) -> str:
 
         # URLを生成して返す
         url = f'http://localhost:4566/{bucket_name}/{file_name}'
+        print('uploaded image URL: {}'.format(url))
         return url
 
     except Exception as e:

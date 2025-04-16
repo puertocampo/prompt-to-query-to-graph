@@ -31,6 +31,7 @@ def execute_plot_code(plot_code: str) -> str:
         
         # base64エンコード
         base64_image = base64.b64encode(image_data).decode('utf-8')
+        print('plot image base64: {}'.format(base64_image[:30]))
         return base64_image
         
     except Exception as e:

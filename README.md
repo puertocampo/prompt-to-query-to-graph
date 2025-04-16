@@ -19,3 +19,8 @@ DBからスキーマデータをdb_schema.jsonに出力
 ```
 $ python3 src/output_db_schema.py
 ```
+
+実行例
+```
+$ python3 src/main.py 各学部の学生所属数を教えて
+```

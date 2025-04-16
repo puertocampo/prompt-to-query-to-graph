@@ -80,4 +80,6 @@ if __name__ == "__main__":
             "plot_code": "",
             "image_base64": "",
             "image_url": ""
-        }, debug=True)
+        }
+        # , debug=True
+        )

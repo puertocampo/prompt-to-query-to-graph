@@ -44,6 +44,7 @@ def execute_sql_query(query: str) -> list:
         cur.close()
         conn.close()
 
+        print('SQL query executed: {}'.format(results))
         return results
 
     except Exception as e:

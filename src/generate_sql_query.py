@@ -10,7 +10,6 @@ class SQLQuery(BaseModel):
     query: str
 
 def generate_sql_query(user_prompt: str) -> str:
-    print('generate_sql_query user_prompt', user_prompt, type(user_prompt))
     """
     プロンプトに合わせたSQLクエリを生成する関数
     
@@ -38,4 +37,5 @@ def generate_sql_query(user_prompt: str) -> str:
     chain = prompt | model
 
     result = chain.invoke({'schema': json.dumps(db_schema, indent=2, ensure_ascii=False), 'user_prompt': user_prompt})
+    print('generated SQL query: {}'.format(result.query))
     return result.query
