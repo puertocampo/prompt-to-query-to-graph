@@ -23,3 +23,27 @@ services:
       - ./src:/home/jovyan/src
     # 最後にjupyterLabに接続するためのコマンドを実行する。
     command: start-notebook.sh --NotebookApp.token=''
+  localstack:
+    image: localstack/localstack:latest
+    ports:
+      - "4566:4566"            # LocalStack Gateway
+      - "4510-4559:4510-4559"  # external services port range
+    environment:
+      - DEBUG=1
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - SERVICES=s3
+      - AWS_DEFAULT_REGION=ap-northeast-1
+      - AWS_ACCESS_KEY_ID=prompt-to-query-to-graph
+      - AWS_SECRET_ACCESS_KEY=prompt-to-query-to-graph
+    volumes:
+      - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      # - ./init-localstack:/docker-entrypoint-initdb.d
+      - ./init-localstack:/etc/localstack/init/ready.d
+    depends_on:
+      - init-localstack
+  init-localstack:
+    image: amazon/aws-cli:latest
+    volumes:
+      - ./init-localstack:/scripts
+    entrypoint: /scripts/create-bucket.sh
