@@ -3,11 +3,11 @@
 -- departments: まず5学部を作成
 INSERT INTO departments (name)
 VALUES
-  ('文学部'),
-  ('理学部'),
-  ('工学部'),
-  ('経済学部'),
-  ('法学部');
+  ('Literature'),
+  ('Science'),
+  ('Engineering'),
+  ('Economics'),
+  ('Law');
 
 -- professors: departmentは1〜5の範囲でランダム
 INSERT INTO professors (name, department_id)

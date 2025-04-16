@@ -34,10 +34,8 @@ def generate_sql_query(user_prompt: str) -> str:
     )
 
     # テンプレートに値を挿入
-    # formatted_prompt = prompt.format(schema=json.dumps(db_schema, indent=2, ensure_ascii=False), user_prompt=user_prompt)
-    model = ChatOpenAI(model="gpt-4o-mini", temperature=0).with_structured_output(SQLQuery)
+    model = ChatOpenAI(model="gpt-4o-mini", temperature=0.2).with_structured_output(SQLQuery)
     chain = prompt | model
 
-    # result = chain.invoke(formatted_prompt)
     result = chain.invoke({'schema': json.dumps(db_schema, indent=2, ensure_ascii=False), 'user_prompt': user_prompt})
     return result.query

@@ -8,6 +8,7 @@ import exec_sql_query
 import generate_plot_code
 import execute_plot_code
 import upload_image_to_s3
+import argparse
 
 # Stateを宣言
 class State(TypedDict):
@@ -20,9 +21,6 @@ class State(TypedDict):
 
 # Nodeを宣言
 def generate_sql_query_node(state: State, config: RunnableConfig):
-    print('will generate_sql_query')
-    sql_query = generate_sql_query.generate_sql_query(state["user_prompt"])
-    print('generate_sql_query sql_query', sql_query, type(sql_query))
     return {**state, "sql_query": generate_sql_query.generate_sql_query(state["user_prompt"])}
 
 def exec_sql_query_node(state: State, config: RunnableConfig):
@@ -62,16 +60,24 @@ graph_builder.set_finish_point("upload_image_to_s3")
 # Graphをコンパイル
 graph = graph_builder.compile()
 
-# Graphの表示
-display(Image(graph.get_graph().draw_mermaid_png()))
+# コマンドライン引数の設定
+parser = argparse.ArgumentParser(description='履修データベースのクエリと可視化を行うグラフ処理')
+parser.add_argument('prompt', type=str, help='可視化したいデータの説明（例：教員が担当している学生数の分布）')
 
-# Graphの実行(引数にはStateの初期値を渡す)
-graph.invoke(
-    {
-        "user_prompt": "教員が担当している学生数の分布を表示してください。",
-        "sql_query": "",
-        "exec_results": [],
-        "plot_code": "",
-        "image_base64": "",
-        "image_url": ""
-    }, debug=True)
+if __name__ == "__main__":
+    # コマンドライン引数の解析
+    args = parser.parse_args()
+
+    # Graphの表示
+    display(Image(graph.get_graph().draw_mermaid_png()))
+
+    # Graphの実行(引数にはStateの初期値を渡す)
+    graph.invoke(
+        {
+            "user_prompt": args.prompt,
+            "sql_query": "",
+            "exec_results": [],
+            "plot_code": "",
+            "image_base64": "",
+            "image_url": ""
+        }, debug=True)

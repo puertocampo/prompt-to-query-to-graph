@@ -44,7 +44,7 @@ def generate_plot_code(data: list, plot_description: str) -> str:
 """
     )
 
-    model = ChatOpenAI(model="gpt-4o-mini", temperature=0).with_structured_output(PlotCode)
+    model = ChatOpenAI(model="gpt-4o-mini", temperature=0.2).with_structured_output(PlotCode)
     chain = prompt | model
 
     result = chain.invoke({'data': str(data), 'description': plot_description})
