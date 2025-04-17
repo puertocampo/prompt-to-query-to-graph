@@ -1,4 +1,4 @@
-from typing import Annotated
+from typing import Annotated, Literal
 from typing_extensions import TypedDict
 from langchain_core.runnables import RunnableConfig
 from langgraph.graph import StateGraph
@@ -15,21 +15,19 @@ class State(TypedDict):
     sql_query: str
     exec_results: any
     plot_code: str
-    image_base64: str
-    image_url: str  
 
 # Nodeを宣言
 def generate_sql_query_node(state: State, config: RunnableConfig):
     return {**state, "sql_query": generate_sql_query.generate_sql_query(state["user_prompt"])}
 
-def check_sql_query_node(state: State, config: RunnableConfig):
+def check_sql_query_node(state: State, config: RunnableConfig) -> Literal["generate_sql_query", "exec_sql_query"]:
     # 破壊的なSQLクエリでないかチェック
-    print('sql_query', state["sql_query"])
-    if state["sql_query"].startswith("SELECT"):
-        print('破壊的なSQLクエリではありません')
-        return "exec_sql_query"
-    else:
+    upper_sql = state["sql_query"].upper()
+    is_destructive = any(keyword in upper_sql for keyword in ["DROP", "DELETE", "TRUNCATE", "ALTER", "UPDATE", "RENAME"])
+    if is_destructive:
         return "generate_sql_query"
+    else:
+        return "exec_sql_query"
 
 def exec_sql_query_node(state: State, config: RunnableConfig):
     return {**state, "exec_results": exec_sql_query.execute_sql_query(state["sql_query"])}
@@ -50,8 +48,7 @@ graph_builder.add_node("generate_plot_code", generate_plot_code_node)
 graph_builder.add_node("execute_plot_code", execute_plot_code_node)
 
 # Nodeをedgeに追加 
-# graph_builder.add_conditional_edges("generate_sql_query", check_sql_query_node)
-graph_builder.add_edge("generate_sql_query", "exec_sql_query")
+graph_builder.add_conditional_edges("generate_sql_query", check_sql_query_node)
 graph_builder.add_edge("exec_sql_query", "generate_plot_code")
 graph_builder.add_edge("generate_plot_code", "execute_plot_code")
 
@@ -59,13 +56,13 @@ graph_builder.add_edge("generate_plot_code", "execute_plot_code")
 graph_builder.set_entry_point("generate_sql_query")
 
 # Graphの終点を宣言
-graph_builder.set_finish_point("upload_image_to_s3")
+graph_builder.set_finish_point("execute_plot_code")
 
 # Graphをコンパイル
 graph = graph_builder.compile()
 
 # Graphの表示
-display(Image(graph.get_graph().draw_mermaid_png()))
+# display(Image(graph.get_graph().draw_mermaid_png()))
 
 # コマンドライン引数の設定
 parser = argparse.ArgumentParser(description='履修データベースのクエリと可視化を行うグラフ処理')
@@ -82,8 +79,6 @@ if __name__ == "__main__":
             "sql_query": "",
             "exec_results": [],
             "plot_code": "",
-            "image_base64": "",
-            "image_url": ""
         }
         # , debug=True
         )
