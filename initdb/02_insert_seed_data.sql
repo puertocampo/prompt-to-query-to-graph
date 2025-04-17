@@ -43,6 +43,10 @@ INSERT INTO enrollments (student_id, course_id, term, grade)
 SELECT
   (floor(random() * 100) + 1)::int AS student_id,
   (floor(random() * 100) + 1)::int AS course_id,
-  (SELECT term FROM term_values ORDER BY random() LIMIT 1) AS term,
-  (SELECT grade FROM grade_values ORDER BY random() LIMIT 1) AS grade
-FROM generate_series(1, 100) AS i;
+  term_values.term,
+  grade_values.grade
+FROM generate_series(1, 200) AS i
+CROSS JOIN term_values
+CROSS JOIN grade_values
+ORDER BY random()
+LIMIT 200;
