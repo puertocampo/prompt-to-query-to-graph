@@ -37,5 +37,5 @@ def generate_sql_query(user_prompt: str) -> str:
     chain = prompt | model
 
     result = chain.invoke({'schema': json.dumps(db_schema, indent=2, ensure_ascii=False), 'user_prompt': user_prompt})
-    print('generated SQL query: {}'.format(result.query))
+    print('\033[32mGenerated SQL query:\033[0m \n{}'.format(result.query))
     return result.query

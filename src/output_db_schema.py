@@ -9,10 +9,6 @@ DB_NAME = "postgres"
 DB_USER = "postgres"
 DB_PASSWORD = "mypass"
 
-QUERY_DATABASES = """
-    SELECT * from courses;
-"""
-
 # テーブルとカラム情報を取得するSQLクエリ
 QUERY_TABLES = """
     SELECT 

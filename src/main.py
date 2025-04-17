@@ -93,5 +93,4 @@ if __name__ == "__main__":
             "exec_results": [],
             "plot_code": "",
         }
-        , debug=True
-        )
+    )
