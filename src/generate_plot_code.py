@@ -7,7 +7,7 @@ from pydantic import BaseModel
 class PlotCode(BaseModel):
     code: str
 
-def generate_plot_code(data: list, plot_description: str) -> str:
+def generate_plot_code(data: list, user_prompt: str) -> str:
     """
     RDBから取得したデータを可視化するmatplotlibのコードを生成する関数
 
@@ -30,7 +30,7 @@ def generate_plot_code(data: list, plot_description: str) -> str:
 {data}
 
 可視化の要件:
-{description}
+{user_prompt}
 
 以下の要件を満たすコードを生成してください：
 - dataをハードコーディングによって書き下し、引数の不要なコードとすること
@@ -47,7 +47,7 @@ def generate_plot_code(data: list, plot_description: str) -> str:
     model = ChatOpenAI(model="gpt-4o-mini", temperature=0.2).with_structured_output(PlotCode)
     chain = prompt | model
 
-    result = chain.invoke({'data': str(data), 'description': plot_description})
-    print('generated plot code: {}'.format(result.code))
+    result = chain.invoke({'data': str(data), 'user_prompt': user_prompt})
+    print('\033[32mGenerated plot code:\033[0m \n{}'.format(result.code))
     return result.code
 
