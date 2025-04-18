@@ -13,4 +13,5 @@ dotenv
 python-dotenv
 pydantic
 matplotlib
+numpy
 boto3==1.34.34

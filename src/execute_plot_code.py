@@ -17,7 +17,7 @@ def execute_plot_code(plot_code: str) -> str:
         plt.clf()
         
         # コードを実行
-        exec(plot_code)
+        exec(plot_code, {})
         
         # 画像をバイト列として保存
         buf = io.BytesIO()
