@@ -1,3 +1,5 @@
+詳細は[LangGraphでつくる！プロンプトに応じてDBデータから自由にグラフ画像を生成するAIエージェント](https://zenn.dev/medicalforce/articles/82d2bbbbd711cf)を参照してください。
+
 # Pythonの仮想環境を作成、アクティベート
 ```
 $ python -m venv [仮想環境名]
