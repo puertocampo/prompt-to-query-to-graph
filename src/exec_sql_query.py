@@ -3,7 +3,7 @@ import psycopg2.extras
 
 # PostgreSQL接続情報
 DB_HOST = "127.0.0.1"
-DB_PORT = 5433
+DB_PORT = 5434
 DB_NAME = "postgres"
 DB_USER = "postgres"
 DB_PASSWORD = "mypass"

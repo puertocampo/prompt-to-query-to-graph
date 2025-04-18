@@ -1,14 +1,15 @@
-! pip3 install paramiko psycopg2
-! pip3 install psycopg2-binary
+# Pythonの仮想環境を作成、アクティベート
+```
+$ python -m venv [仮想環境名]
+$ . [仮想環境名]/bin/activate
+```
 
-! /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-! brew install postgresql
+# パッケージインストール
+```
+$ pip install -r requirements.txt
+```
 
-
-パッケージインストール
-pip3 install -r requirements.txt
-
-# DB立ち上げ （データINSERT）
+# DB立ち上げ （+初期データINSERT）
 
 ```
 $ docker-compose up -d
@@ -17,10 +18,10 @@ $ docker-compose up -d
 DBからスキーマデータをdb_schema.jsonに出力
 
 ```
-$ python3 src/output_db_schema.py
+$ python src/output_db_schema.py
 ```
 
 実行例
 ```
-$ python3 src/main.py 各学部の学生所属数を教えて
+$ python src/main.py 各学部の学生所属数を教えて
 ```
