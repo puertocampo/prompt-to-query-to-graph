@@ -3,3 +3,5 @@
 .venv
 db_schema.json
 __pycache__
+# 生成されたコードを手動実行して動作確認する用
+sample.py
